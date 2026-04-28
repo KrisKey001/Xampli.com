@@ -870,7 +870,7 @@ async function sendChat(){
   addMsg(text,'user');chatHistory.push({role:'user',content:text});
   const typing=addTyping();
   try{
-    const res=await fetch('https://xampli.com/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM,messages:chatHistory})});
+    const res=await fetch('https://www.xampli.com/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM,messages:chatHistory})});
     const data=await res.json();
     const reply=data.content?.map(b=>b.text||'').join('')||"I'm sorry, I couldn't process that. Please try again or email info@xampli.com.";
     typing.remove();addMsg(reply,'bot');chatHistory.push({role:'assistant',content:reply});
