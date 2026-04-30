@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Xampli Framework | Capability & Maturity Labs</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0F2D5A;--navy-mid:#1B4F8A;--navy-light:#2D6AAD;--red:#E8453C;--red-light:#F06B64;--white:#FFFFFF;--off-white:#F7F8FC;--grey-light:#EEF1F7;--grey-mid:#8A9BBE;--grey-text:#4A5568;--font-display:'DM Serif Display',Georgia,serif;--font-body:'Sora',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);font-size:16px;line-height:1.7;color:var(--grey-text);background:var(--white);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,45,90,0.97);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:70px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-logo{display:flex;align-items:center;gap:14px;text-decoration:none}
+.nav-logo svg{width:44px;height:44px;flex-shrink:0}
+.nav-brand{display:flex;flex-direction:column;gap:2px}
+.nav-brand-name{font-family:var(--font-body);font-weight:700;font-size:22px;color:var(--white);letter-spacing:-0.5px;line-height:1.1}
+.nav-brand-tagline{font-size:9px;font-weight:600;letter-spacing:2.5px;color:rgba(255,255,255,0.55);line-height:1}
+.nav-brand-divider{height:1px;background:var(--red);margin:3px 0 2px;opacity:0.8}
+.nav-brand-sub{font-size:8px;font-weight:600;letter-spacing:2px;color:rgba(255,255,255,0.35);line-height:1}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;color:rgba(255,255,255,0.75);font-size:14px;font-weight:400;letter-spacing:0.5px;transition:color 0.2s}
+.nav-links a:hover{color:var(--white)}
+.nav-links a.active{color:var(--white)}
+.nav-cta{background:var(--red);color:var(--white)!important;padding:9px 22px;border-radius:4px;font-weight:600!important;transition:background 0.2s!important}
+.nav-cta:hover{background:var(--red-light)!important}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.nav-burger span{display:block;width:24px;height:2px;background:white;border-radius:2px;transition:all 0.3s}
+
+/* HERO */
+.fw-hero{background:var(--navy);padding:140px 5% 80px;position:relative;overflow:hidden}
+.fw-hero-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.fw-hero-accent{position:absolute;top:-120px;right:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,69,60,0.1) 0%,transparent 70%);pointer-events:none}
+.fw-hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto}
+.fw-hero-tag{display:inline-block;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);border:1px solid rgba(232,69,60,0.4);padding:6px 16px;border-radius:2px;margin-bottom:24px}
+.fw-hero h1{font-family:var(--font-display);font-size:clamp(32px,4vw,56px);font-weight:400;color:white;line-height:1.15;margin-bottom:24px;max-width:720px}
+.fw-hero h1 em{font-style:italic;color:var(--red-light)}
+.fw-hero-sub{font-size:17px;color:rgba(255,255,255,0.6);line-height:1.8;max-width:620px}
+
+/* SECTIONS */
+section{padding:80px 5%}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-tag{font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:16px;display:block}
+.section-title{font-family:var(--font-display);font-size:clamp(26px,3vw,40px);font-weight:400;color:var(--navy);line-height:1.2;margin-bottom:16px}
+.section-body{font-size:16px;color:var(--grey-text);line-height:1.85;max-width:720px;margin-bottom:48px}
+
+/* LEVELS */
+.levels-section{background:var(--navy)}
+.levels-section .section-title{color:white}
+.levels-section .section-body{color:rgba(255,255,255,0.6)}
+.levels-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;border-radius:6px;overflow:hidden}
+.level-card{background:rgba(255,255,255,0.05);padding:32px 24px;position:relative}
+.level-card:hover{background:rgba(255,255,255,0.08)}
+.level-num{font-family:var(--font-display);font-size:52px;color:var(--red);line-height:1;margin-bottom:12px}
+.level-name{font-family:var(--font-display);font-size:20px;color:white;margin-bottom:12px;font-weight:400}
+.level-desc{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.65;margin-bottom:16px}
+.level-risk{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--red);opacity:0.7}
+.level-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red);opacity:0.3}
+.level-card:nth-child(1) .level-bar{opacity:0.2;width:20%}
+.level-card:nth-child(2) .level-bar{opacity:0.35;width:40%}
+.level-card:nth-child(3) .level-bar{opacity:0.5;width:60%}
+.level-card:nth-child(4) .level-bar{opacity:0.7;width:80%}
+.level-card:nth-child(5) .level-bar{opacity:1;width:100%}
+
+/* DIMENSIONS */
+.dimensions-section{background:var(--off-white)}
+.dims-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.dim-card{background:var(--white);border:1px solid var(--grey-light);border-radius:6px;padding:28px;display:flex;gap:20px;align-items:flex-start;transition:box-shadow 0.2s}
+.dim-card:hover{box-shadow:0 8px 32px rgba(15,45,90,0.08)}
+.dim-number{font-family:var(--font-display);font-size:36px;color:var(--red);line-height:1;flex-shrink:0;width:40px}
+.dim-body{}
+.dim-name{font-family:var(--font-display);font-size:20px;color:var(--navy);margin-bottom:8px;font-weight:400}
+.dim-question{font-size:14px;color:var(--grey-text);line-height:1.6;font-style:italic;margin-bottom:16px}
+.dim-scores{display:flex;flex-direction:column;gap:6px}
+.dim-score{display:flex;gap:10px;align-items:baseline}
+.dim-score-num{font-size:11px;font-weight:700;color:var(--red);width:14px;flex-shrink:0}
+.dim-score-text{font-size:12px;color:var(--grey-mid);line-height:1.4}
+
+/* INDICATORS */
+.indicators-section{background:var(--white)}
+.indicators-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.indicator-card{background:var(--navy);border-radius:8px;padding:40px;position:relative;overflow:hidden}
+.indicator-accent{position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(232,69,60,0.15) 0%,transparent 70%)}
+.indicator-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--red);background:rgba(232,69,60,0.12);padding:4px 10px;border-radius:2px;margin-bottom:16px}
+.indicator-abbr{font-family:var(--font-display);font-size:48px;color:white;line-height:1;margin-bottom:8px}
+.indicator-name{font-size:14px;font-weight:600;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+.indicator-question{font-family:var(--font-display);font-size:20px;color:white;font-style:italic;line-height:1.4;margin-bottom:16px}
+.indicator-desc{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8}
+.indicator-dims{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1)}
+.indicator-dims-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px}
+.indicator-dims-list{display:flex;flex-wrap:wrap;gap:8px}
+.indicator-dim-tag{font-size:11px;color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);padding:4px 10px;border-radius:3px}
+
+/* TWO LEVELS */
+.two-levels-section{background:var(--off-white)}
+.two-levels-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.two-level-card{background:var(--white);border:1px solid var(--grey-light);border-radius:6px;overflow:hidden}
+.two-level-card.featured{background:var(--navy)}
+.two-level-header{padding:28px 32px;border-bottom:1px solid var(--grey-light)}
+.two-level-card.featured .two-level-header{border-bottom-color:rgba(255,255,255,0.1)}
+.two-level-num{font-family:var(--font-display);font-size:48px;color:var(--red);line-height:1;margin-bottom:8px}
+.two-level-name{font-family:var(--font-display);font-size:24px;color:var(--navy);font-weight:400}
+.two-level-card.featured .two-level-name{color:white}
+.two-level-body{padding:28px 32px}
+.two-level-desc{font-size:15px;color:var(--grey-text);line-height:1.8;margin-bottom:20px}
+.two-level-card.featured .two-level-desc{color:rgba(255,255,255,0.65)}
+.two-level-features{list-style:none;display:flex;flex-direction:column;gap:10px}
+.two-level-features li{font-size:14px;color:var(--grey-text);padding-left:18px;position:relative;line-height:1.5}
+.two-level-features li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--red)}
+.two-level-card.featured .two-level-features li{color:rgba(255,255,255,0.65)}
+
+/* CTA */
+.fw-cta{background:var(--navy);text-align:center;padding:80px 5%}
+.fw-cta h2{font-family:var(--font-display);font-size:clamp(28px,3vw,42px);color:white;margin-bottom:16px;font-weight:400}
+.fw-cta p{font-size:17px;color:rgba(255,255,255,0.6);margin-bottom:36px;max-width:520px;margin-left:auto;margin-right:auto}
+.fw-cta-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--red);color:var(--white);padding:14px 32px;border-radius:4px;text-decoration:none;font-weight:600;font-size:15px;transition:background 0.2s,transform 0.2s;display:inline-block}
+.btn-primary:hover{background:var(--red-light);transform:translateY(-1px)}
+.btn-outline-light{border:1px solid rgba(255,255,255,0.3);color:white;padding:14px 32px;border-radius:4px;text-decoration:none;font-size:15px;transition:all 0.2s;display:inline-block}
+.btn-outline-light:hover{border-color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.05)}
+
+/* FOOTER */
+footer{background:#070F1F;padding:40px 5% 24px}
+.footer-bottom{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.footer-bottom p{font-size:13px;color:rgba(255,255,255,0.25)}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,0.25);font-style:italic}
+
+@media(max-width:900px){
+  .levels-grid{grid-template-columns:1fr 1fr}
+  .dims-grid{grid-template-columns:1fr}
+  .indicators-grid{grid-template-columns:1fr}
+  .two-levels-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+}
+@media(max-width:600px){.levels-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 78 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><clipPath id="navHex"><polygon points="22,4 56,4 73,34 56,64 22,64 5,34"/></clipPath></defs>
+      <polygon points="22,4 56,4 73,34 56,64 22,64 5,34" fill="none" stroke="#2D6AAD" stroke-width="3.5" stroke-linejoin="round"/>
+      <g clip-path="url(#navHex)">
+        <rect x="14" y="52" width="9" height="12" fill="#B0BED0" rx="2"/>
+        <rect x="25" y="42" width="9" height="22" fill="#7A99BB" rx="2"/>
+        <rect x="36" y="30" width="9" height="34" fill="#3A6EA8" rx="2"/>
+        <rect x="47" y="16" width="9" height="48" fill="#1B4F8A" rx="2"/>
+      </g>
+      <circle cx="72" cy="7" r="6" fill="#E8453C"/>
+    </svg>
+    <div class="nav-brand">
+      <div class="nav-brand-name">Xampli</div>
+      <div class="nav-brand-tagline">MEASURE. ENABLE. TRANSFORM.</div>
+      <div class="nav-brand-divider"></div>
+      <div class="nav-brand-sub">CAPABILITY &amp; MATURITY LABS</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#approach">Approach</a></li>
+    <li><a href="framework.html" class="active">Framework</a></li>
+    <li><a href="index.html#assessment">Assessment</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#contact" class="nav-cta">Get in touch</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="fw-hero">
+  <div class="fw-hero-bg"></div>
+  <div class="fw-hero-accent"></div>
+  <div class="fw-hero-inner">
+    <span class="fw-hero-tag">The Xampli Framework</span>
+    <h1>Measuring maturity the way it <em>actually works</em> in organisations.</h1>
+    <p class="fw-hero-sub">Built on PhD-level research and validated through 30+ expert interviews, the Xampli framework gives organisations an honest, evidence-based picture of where they truly are — not where they think they are.</p>
+  </div>
+</div>
+
+<!-- TWO LEVELS -->
+<section class="two-levels-section">
+  <div class="section-inner">
+    <span class="section-tag">Two Levels of Assessment</span>
+    <h2 class="section-title">Not every situation requires the same depth</h2>
+    <p class="section-body">Xampli assessments are designed to be proportionate. A lot can be derived from an initial scan — and depending on where the organisation is, a full diagnostic may not be necessary to start organising action.</p>
+    <div class="two-levels-grid">
+      <div class="two-level-card featured">
+        <div class="two-level-header">
+          <div class="two-level-num">1</div>
+          <div class="two-level-name">Executive Readiness Scan</div>
+        </div>
+        <div class="two-level-body">
+          <p class="two-level-desc">Rapid assessment across 8 transformation-critical dimensions. Identifies priority risks and immediate actions. Suitable before launching or scaling transformation initiatives.</p>
+          <ul class="two-level-features">
+            <li>Single-respondent view from leadership</li>
+            <li>8 dimensions, scored 1–5</li>
+            <li>Overall Readiness Level (ORL)</li>
+            <li>Transformation Confidence Indicator (TCI)</li>
+            <li>Available as a free online scan</li>
+          </ul>
+        </div>
+      </div>
+      <div class="two-level-card">
+        <div class="two-level-header">
+          <div class="two-level-num">2</div>
+          <div class="two-level-name">Full Diagnostic</div>
+        </div>
+        <div class="two-level-body">
+          <p class="two-level-desc">Deep dive across all 8 dimensions with sub-level scoring, cross-functional perspectives, and benchmarks against comparable organisations.</p>
+          <ul class="two-level-features">
+            <li>Multi-respondent across functions and levels</li>
+            <li>Sub-dimension scoring and gap analysis</li>
+            <li>Benchmarks against comparable organisations</li>
+            <li>Executive Action Plan — prioritised 90-day roadmap</li>
+            <li>Stakeholder workshop and progress review</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATURITY LEVELS -->
+<section class="levels-section">
+  <div class="section-inner">
+    <span class="section-tag">Maturity Levels</span>
+    <h2 class="section-title">Five stages of transformation readiness</h2>
+    <p class="section-body">Maturity is not binary — it exists on a spectrum. Organisations rarely mature uniformly across all dimensions. Understanding where you sit honestly is the foundation of everything that follows.</p>
+    <div class="levels-grid">
+      <div class="level-card">
+        <div class="level-num">1</div>
+        <div class="level-name">Exploring</div>
+        <div class="level-desc">Digital and AI activity is fragmented, experimental, or technology-led without strategic alignment. Significant transformation risk.</div>
+        <div class="level-risk">High Risk</div>
+        <div class="level-bar"></div>
+      </div>
+      <div class="level-card">
+        <div class="level-num">2</div>
+        <div class="level-name">Emerging</div>
+        <div class="level-desc">Initiatives exist but lack coordination, governance clarity, or measurable value tracking. Pilots are possible but scaling is risky.</div>
+        <div class="level-risk">Pilots Possible</div>
+        <div class="level-bar"></div>
+      </div>
+      <div class="level-card">
+        <div class="level-num">3</div>
+        <div class="level-name">Structured</div>
+        <div class="level-desc">Transformation priorities are defined and supported by initial governance and delivery capability. Controlled scaling becomes feasible.</div>
+        <div class="level-risk">Controlled Scaling</div>
+        <div class="level-bar"></div>
+      </div>
+      <div class="level-card">
+        <div class="level-num">4</div>
+        <div class="level-name">Scaling</div>
+        <div class="level-desc">Programmes are coordinated, data foundations support deployment, and leadership actively steers execution. Enterprise rollout is viable.</div>
+        <div class="level-risk">Enterprise Viable</div>
+        <div class="level-bar"></div>
+      </div>
+      <div class="level-card">
+        <div class="level-num">5</div>
+        <div class="level-name">Transforming</div>
+        <div class="level-desc">Transformation is embedded across strategy, operations, workforce capability, and value realisation. Optimisation is the primary focus.</div>
+        <div class="level-risk">Optimisation Phase</div>
+        <div class="level-bar"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIMENSIONS -->
+<section class="dimensions-section">
+  <div class="section-inner">
+    <span class="section-tag">Eight Dimensions</span>
+    <h2 class="section-title">The critical indicators of transformation readiness</h2>
+    <p class="section-body">Research has shown these eight dimensions to be the most critical indicators of digital, data, and AI transformation readiness. Each is scored 1–5 against validated maturity descriptors. Score based on what is consistently true across the organisation — not what is true in the best-performing team or most recent initiative.</p>
+    <div class="dims-grid">
+      <div class="dim-card">
+        <div class="dim-number">1</div>
+        <div class="dim-body">
+          <div class="dim-name">Strategy Alignment</div>
+          <div class="dim-question">How clearly is AI/digital transformation linked to measurable business priorities?</div>
+          <div class="dim-scores">
+            <div class="dim-score"><div class="dim-score-num">1</div><div class="dim-score-text">No defined link to business objectives</div></div>
+            <div class="dim-score"><div class="dim-score-num">2</div><div class="dim-score-text">Exploratory discussions only</div></div>
+            <div class="dim-score"><div class="dim-score-num">3</div><div class="dim-score-text">Some initiatives aligned with strategy</div></div>
+            <div class="dim-score"><div class="dim-score-num">4</div><div class="dim-score-text">Clear roadmap linked to priorities</div></div>
+            <div class="dim-score"><div class="dim-score-num">5</div><div class="dim-score-text">Transformation embedded in business strategy</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-number">2</div>
+        <div class="dim-body">
+          <div class="dim-name">Leadership Ownership</div>
+          <div class="dim-question">How actively is senior leadership sponsoring transformation?</div>
+          <div class="dim-scores">
+            <div class="dim-score"><div class="dim-score-num">1</div><div class="dim-score-text">No clear ownership</div></div>
+            <div class="dim-score"><div class="dim-score-num">2</div><div class="dim-score-text">Informal sponsorship</div></div>
+            <div class="dim-score"><div class="dim-score-num">3</div><div class="dim-score-text">Named sponsor but limited engagement</div></div>
+            <div class="dim-score"><div class="dim-score-num">4</div><div class="dim-score-text">Active executive steering</div></div>
+            <div class="dim-score"><div class="dim-score-num">5</div><div class="dim-score-text">Transformation led from the top</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-number">3</div>
+        <div class="dim-body">
+          <div class="dim-name">Data Foundations</div>
+          <div class="dim-question">How reliable and accessible is the organisation's data for decision-making and AI use?</div>
+          <div class="dim-scores">
+            <div class="dim-score"><div class="dim-score-num">1</div><div class="dim-score-text">Fragmented and inconsistent</div></div>
+            <div class="dim-score"><div class="dim-score-num">2</div><div class="dim-score-text">Partially structured but unreliable</div></div>
+            <div class="dim-score"><div class="dim-score-num">3</div><div class="dim-score-text">Core datasets usable</div></div>
+            <div class="dim-score"><div class="dim-score-num">4</div><div class="dim-score-text">Governed and accessible</div></div>
+            <div class="dim-score"><div class="dim-score-num">5</div><div class="dim-score-text">Strategic asset supporting transformation</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-number">4</div>
+        <div class="dim-body">
+          <div class="dim-name">Technology Enablement</div>
+          <div class="dim-question">How well does current technology infrastructure support scaling digital or AI initiatives?</div>
+          <div class="dim-scores">
+            <div class="dim-score"><div class="dim-score-num">1</div><div class="dim-score-text">Legacy constraints dominate</div></div>
+            <div class="dim-score"><div class="dim-score-num">2</div><div class="dim-score-text">Limited integration capability</div></div>
+            <div class="dim-score"><div class="dim-score-num">3</div><div class="dim-score-text">Platforms support pilots</div></div>
+            <div class="dim-score"><div class="dim-score-num">4</div><div class="dim-score-text">Infrastructure supports scaling</div></div>
+            <div class="dim-score"><div class="dim-score-num">5</div><div class="dim-score-text">Architecture designed for transformation</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-number">5</div>
+        <div class="dim-body">
+          <div class="dim-name">Workforce Capability</div>
+          <div class="dim-question">How prepared is the workforce to deliver transformation initiatives?</div>
+          <div class="dim-scores">
+            <div class="dim-score"><div class="dim-score-num">1</div><div class="dim-score-text">Skills gap not recognised</div></div>
+            <div class="dim-score"><div class="dim-score-num">2</div><div class="dim-score-text">Awareness emerging</div></div>
+            <div class="dim-score"><div class="dim-score-num">3</div><div class="dim-score-text">Targeted capability building underway</div></div>
+            <div class="dim-score"><div class="dim-score-num">4</div><div class="dim-score-text">Structured capability development</div></div>
+            <div class="dim-score"><div class="dim-score-num">5</div><div class="dim-score-text">Workforce aligned to transformation strategy</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-number">6</div>
+        <div class="dim-body">
+          <div class="dim-name">Execution Structure</div>
+          <div class="dim-question">How effectively are transformation initiatives coordinated across the organisation?</div>
+          <div class="dim-scores">
+            <div class="dim-score"><div class="dim-score-num">1</div><div class="dim-score-text">Isolated projects</div></div>
+            <div class="dim-score"><div class="dim-score-num">2</div><div class="dim-score-text">Informal coordination</div></div>
+            <div class="dim-score"><div class="dim-score-num">3</div><div class="dim-score-text">Programme structure emerging</div></div>
+            <div class="dim-score"><div class="dim-score-num">4</div><div class="dim-score-text">Coordinated portfolio management</div></div>
+            <div class="dim-score"><div class="dim-score-num">5</div><div class="dim-score-text">Integrated transformation governance</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-number">7</div>
+        <div class="dim-body">
+          <div class="dim-name">Governance Awareness</div>
+          <div class="dim-question">How clearly are risks related to AI, data use, and regulation understood?</div>
+          <div class="dim-scores">
+            <div class="dim-score"><div class="dim-score-num">1</div><div class="dim-score-text">Risks not considered</div></div>
+            <div class="dim-score"><div class="dim-score-num">2</div><div class="dim-score-text">Awareness emerging</div></div>
+            <div class="dim-score"><div class="dim-score-num">3</div><div class="dim-score-text">Partial oversight mechanisms</div></div>
+            <div class="dim-score"><div class="dim-score-num">4</div><div class="dim-score-text">Defined governance practices</div></div>
+            <div class="dim-score"><div class="dim-score-num">5</div><div class="dim-score-text">Governance embedded in delivery lifecycle</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-number">8</div>
+        <div class="dim-body">
+          <div class="dim-name">Value Realisation Discipline</div>
+          <div class="dim-question">How systematically does the organisation measure value from transformation initiatives?</div>
+          <div class="dim-scores">
+            <div class="dim-score"><div class="dim-score-num">1</div><div class="dim-score-text">No tracking</div></div>
+            <div class="dim-score"><div class="dim-score-num">2</div><div class="dim-score-text">Ad-hoc measurement</div></div>
+            <div class="dim-score"><div class="dim-score-num">3</div><div class="dim-score-text">Some initiatives tracked</div></div>
+            <div class="dim-score"><div class="dim-score-num">4</div><div class="dim-score-text">Structured benefit tracking</div></div>
+            <div class="dim-score"><div class="dim-score-num">5</div><div class="dim-score-text">Value measurement embedded organisation-wide</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDICATORS -->
+<section class="indicators-section">
+  <div class="section-inner">
+    <span class="section-tag">Two Key Indicators</span>
+    <h2 class="section-title">Understanding your result</h2>
+    <p class="section-body">The Xampli framework produces two indicators that together give a complete picture of where an organisation stands and whether it is ready to execute transformation successfully.</p>
+    <div class="indicators-grid">
+      <div class="indicator-card">
+        <div class="indicator-accent"></div>
+        <div class="indicator-tag">ORL</div>
+        <div class="indicator-abbr">Overall Readiness Level</div>
+        <div class="indicator-question">"How developed is your transformation system right now?"</div>
+        <div class="indicator-desc">The ORL reflects your organisation's current maturity position across all eight dimensions. It gives a clear, evidence-based view of where the transformation system stands today — not where leadership hopes it is, but where it actually is based on consistent organisational reality.</div>
+        <div class="indicator-dims">
+          <div class="indicator-dims-label">Based on all 8 dimensions</div>
+          <div class="indicator-dims-list">
+            <span class="indicator-dim-tag">Strategy Alignment</span>
+            <span class="indicator-dim-tag">Leadership Ownership</span>
+            <span class="indicator-dim-tag">Data Foundations</span>
+            <span class="indicator-dim-tag">Technology Enablement</span>
+            <span class="indicator-dim-tag">Workforce Capability</span>
+            <span class="indicator-dim-tag">Execution Structure</span>
+            <span class="indicator-dim-tag">Governance Awareness</span>
+            <span class="indicator-dim-tag">Value Realisation</span>
+          </div>
+        </div>
+      </div>
+      <div class="indicator-card">
+        <div class="indicator-accent"></div>
+        <div class="indicator-tag">TCI</div>
+        <div class="indicator-abbr">Transformation Confidence Indicator</div>
+        <div class="indicator-question">"Can this organisation execute transformation without major risk of failure?"</div>
+        <div class="indicator-desc">The TCI focuses on the four execution-critical dimensions — the ones that most determine whether transformation programmes succeed or stall. An organisation can have a reasonable ORL but a low TCI, which signals that while some maturity exists, the conditions for safe scaling are not yet in place.</div>
+        <div class="indicator-dims">
+          <div class="indicator-dims-label">Based on 4 execution-critical dimensions</div>
+          <div class="indicator-dims-list">
+            <span class="indicator-dim-tag">Strategy Alignment</span>
+            <span class="indicator-dim-tag">Data Foundations</span>
+            <span class="indicator-dim-tag">Execution Structure</span>
+            <span class="indicator-dim-tag">Governance Awareness</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="fw-cta">
+  <h2>Ready to find out where you stand?</h2>
+  <p>Take the free Executive Readiness Scan — 8 questions, instant result, takes less than 3 minutes.</p>
+  <div class="fw-cta-buttons">
+    <a href="index.html#assessment" class="btn-primary">Take the free scan →</a>
+    <a href="index.html#contact" class="btn-outline-light">Talk to Xampli</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Xampli | Capability &amp; Maturity Labs. All rights reserved.</p>
+    <p class="footer-tagline">Excellence. Aplified.</p>
+  </div>
+</footer>
+
+</body>
+</html>
